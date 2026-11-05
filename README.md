@@ -2,7 +2,7 @@
 
 A civilisation simulator that runs in the terminal.
 
-> **Made by me as a vibe-coding experiment.** I’m exploring vibe coding by
+> **Made by Ryan as a vibe-coding experiment.** I’m exploring vibe coding by
 > building and iterating on a working AI civilization simulator with AI
 > assistance. This project is an experiment in what I can create this way.
 
