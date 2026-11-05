@@ -2,13 +2,15 @@
 
 A civilisation simulator that runs in the terminal.
 
+> **Made by me as a vibe-coding experiment.** I’m exploring vibe coding by
+> building and iterating on a working AI civilization simulator with AI
+> assistance. This project is an experiment in what I can create this way.
+
 You start with 100 people on a procedurally generated map. They're hungry, they get
 tired, and they die if you ignore either. Everything after that — tribes, villages,
 farming, wars, plagues — is something they work out themselves.
 
 Runs on Python 3.10+ with no dependencies.
-
-This was an experiment in vibe coding. The simulator was built by describing what should happen and iterating in conversation, rather than starting from a written spec.
 
 ## Running it
 
