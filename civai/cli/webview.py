@@ -519,6 +519,8 @@ class LiveState:
             rng = engine.rng
             day = engine.clock.day
             affected = 0
+            food_added = 0.0
+            fertility_added = 0.0
 
             def tiles():
                 return list(world.tiles_within(x, y, radius))
@@ -549,13 +551,24 @@ class LiveState:
             elif tool == "bless":
                 ceiling = config.settlements.max_fertility + 1.0
                 for tx, ty in tiles():
+                    before = world.resources.food[ty][tx]
+                    fertility_before = world.resources.fertility[ty][tx]
                     world.resources.cultivate(tx, ty, 0.6, ceiling)
+                    fertility_after = world.resources.fertility[ty][tx]
                     cap = world.resources.effective_capacity(tx, ty)
                     if cap > 0:
                         world.resources.food[ty][tx] = cap
-                        affected += 1
-                engine.events.record(day, EventKind.SYSTEM,
-                                     f"The land around ({x}, {y}) flourished")
+                        food_added += max(0.0, cap - before)
+                        fertility_added += max(0.0, fertility_after - fertility_before)
+                        if fertility_after > fertility_before or cap > before:
+                            affected += 1
+                message = (
+                    f"Blessed {affected} tiles around ({x}, {y}): "
+                    f"fertility +{fertility_added:.1f}, food +{food_added:.1f}"
+                    if affected
+                    else f"No change: this area is already flourishing or has no farmable land"
+                )
+                engine.events.record(day, EventKind.SYSTEM, message)
 
             elif tool == "blight":
                 for tx, ty in tiles():
@@ -607,7 +620,14 @@ class LiveState:
             else:
                 return {"ok": False, "error": f"Unknown tool: {tool}"}
 
-            return {"ok": True, "tool": tool, "affected": affected}
+            result = {"ok": True, "tool": tool, "affected": affected}
+            if tool == "bless":
+                result["food_added"] = round(food_added, 1)
+                result["fertility_added"] = round(fertility_added, 1)
+                result["message"] = message
+            else:
+                result["message"] = f"{tool.title()} affected {affected}"
+            return result
 
     def found_civ(
         self,

@@ -141,6 +141,13 @@ input[type=range]{flex:1;accent-color:var(--accent);height:16px;width:auto;min-w
 #tip{position:absolute;pointer-events:none;background:rgba(7,10,9,.96);border:1px solid var(--line);
   border-radius:4px;padding:4px 8px;font-family:var(--mono);font-size:11px;color:var(--ink2);
   display:none;z-index:5;white-space:nowrap;max-width:240px;overflow:hidden;text-overflow:ellipsis}
+#notice{position:absolute;z-index:6;top:12px;left:50%;transform:translateX(-50%);
+  max-width:calc(100% - 24px);padding:8px 12px;border:1px solid #32766D;border-radius:5px;
+  background:rgba(10,24,20,.96);color:#B8E8D6;font-family:var(--mono);font-size:11px;
+  line-height:1.4;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.35);
+  opacity:0;visibility:hidden;transition:opacity .15s ease;pointer-events:none}
+#notice.show{opacity:1;visibility:visible}
+#notice.error{border-color:#8A4938;background:rgba(35,15,12,.96);color:#F0B09A}
 @media (max-width:1100px){
   #shell{grid-template-columns:minmax(188px,210px) minmax(0,1fr) minmax(240px,280px)}
 }
@@ -218,7 +225,7 @@ input[type=range]{flex:1;accent-color:var(--accent);height:16px;width:auto;min-w
 </aside>
 
 <div id="center">
-  <div id="stage"><canvas id="map"></canvas><div id="tip"></div></div>
+  <div id="stage"><canvas id="map"></canvas><div id="tip"></div><div id="notice" role="status" aria-live="polite"></div></div>
   <section id="log">
     <div class="hd">Chronicle <button id="logToggle">Hide</button></div>
     <div class="filters">
@@ -286,9 +293,18 @@ var houses=[], logFilter="";
 var cv=document.getElementById("map"), ctx=cv.getContext("2d");
 var stage=document.getElementById("stage");
 var tip=document.getElementById("tip");
+var noticeTimer=0;
 
 function tok(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
 function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function showNotice(message,isError){
+  var el=document.getElementById("notice");
+  el.textContent=message||"Action complete.";
+  el.classList.toggle("error",!!isError);
+  el.classList.add("show");
+  clearTimeout(noticeTimer);
+  noticeTimer=setTimeout(function(){el.classList.remove("show")},3600);
+}
 function tribeColour(i){return i<0?null:"hsl("+((i*47)%360)+" 58% 52%)"}
 function houseClass(h){return h==="openai"?"oa":h==="deepseek"?"ds":""}
 function houseLabel(h){return h==="openai"?"GPT-5 Mini":h==="deepseek"?"DeepSeek Flash":h||""}
@@ -698,8 +714,19 @@ function handleClick(e){
     return;
   }
   if(tool){
-    fetch("/act?tool="+tool+"&x="+t.x+"&y="+t.y+"&radius="+radius)
-      .then(function(r){return r.json()}).then(function(){ if(layer!=="none")loadOverlay() });
+    var chosenTool=tool;
+    fetch("/act?tool="+chosenTool+"&x="+t.x+"&y="+t.y+"&radius="+radius)
+      .then(function(r){if(!r.ok)throw new Error("Server returned "+r.status);return r.json()})
+      .then(function(d){
+        if(!d.ok){showNotice(d.error||"The power could not be used.",true);return}
+        showNotice(d.message||chosenTool+" complete.");
+        if(chosenTool==="bless"){
+          layer="food";
+          document.querySelectorAll(".lyr").forEach(function(b){b.classList.toggle("on",b.dataset.layer===layer)});
+          loadOverlay();
+        }else if(layer!=="none")loadOverlay();
+      })
+      .catch(function(error){showNotice("Power failed: "+error.message,true)});
     return;
   }
   focusTile(t.x,t.y);
