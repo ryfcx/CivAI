@@ -25,9 +25,9 @@ from typing import Dict, List, Sequence
 # package would not import. Add the repo root explicitly.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from worldbox.config import Config  # noqa: E402
-from worldbox.simulation.engine import SimulationEngine
-from worldbox.simulation.events import EventKind
+from civai.config import Config  # noqa: E402
+from civai.simulation.engine import SimulationEngine
+from civai.simulation.events import EventKind
 
 
 def measure(config: Config, seed: int, days: int) -> Dict[str, float]:
@@ -89,7 +89,7 @@ def build_configs(baseline_flag: str) -> Dict[str, Config]:
 
 
 def main(argv: List[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Compare two Worldbox configurations.")
+    parser = argparse.ArgumentParser(description="Compare two CivAI configurations.")
     parser.add_argument("--days", type=int, default=6000)
     parser.add_argument("--seeds", type=int, nargs="+", default=[1337, 2024, 7])
     args = parser.parse_args(argv)

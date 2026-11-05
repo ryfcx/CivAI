@@ -137,7 +137,7 @@ def decide(
 
     Every action is scored and the best one wins, so competing needs resolve
     against each other instead of the first matching rule taking the day. See
-    :mod:`worldbox.agents.utility` for the scoring itself.
+    :mod:`civai.agents.utility` for the scoring itself.
 
     The legacy first-match ladder is kept behind ``UtilityConfig.enabled`` so
     the two can be compared on the same seed.

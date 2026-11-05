@@ -1,10 +1,10 @@
-"""Worldbox entry point.
+"""CivAI entry point.
 
 Usage::
 
-    python -m worldbox.main              # interactive terminal session
-    python -m worldbox.main --seed 42    # start from a specific seed
-    python -m worldbox.main --days 1000  # headless run, print a final summary
+    python -m civai.main              # interactive terminal session
+    python -m civai.main --seed 42    # start from a specific seed
+    python -m civai.main --days 1000  # headless run, print a final summary
 """
 
 from __future__ import annotations
@@ -24,8 +24,8 @@ from .world.terrain import WorldGenerationError
 def build_parser() -> argparse.ArgumentParser:
     """Build the command-line argument parser."""
     parser = argparse.ArgumentParser(
-        prog="worldbox",
-        description="Worldbox - a terminal-based artificial civilisation simulation.",
+        prog="civai",
+        description="CivAI - a terminal-based artificial civilisation simulation.",
     )
     parser.add_argument(
         "--seed", type=int, default=None, help="Random seed for world generation."
@@ -141,8 +141,8 @@ def run_viewer(engine: SimulationEngine, days: int, open_browser: bool = True) -
     else:
         recorder.capture()
 
-    data_path = Path("worldbox_run.json")
-    page = Path("worldbox.html")
+    data_path = Path("civai_run.json")
+    page = Path("civai.html")
     try:
         recorder.write_json(data_path)
         build(data_path, page)
@@ -203,7 +203,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         config = build_config(args)
         engine = SimulationEngine(config=config, seed=args.seed)
     except (ValueError, WorldGenerationError) as error:
-        print(f"Could not start Worldbox: {error}", file=sys.stderr)
+        print(f"Could not start CivAI: {error}", file=sys.stderr)
         return 1
 
     if args.live:

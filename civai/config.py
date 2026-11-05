@@ -1,4 +1,4 @@
-"""Central configuration for Worldbox.
+"""Central configuration for CivAI.
 
 Every tunable number in the simulation lives here. This module deliberately
 imports nothing from the rest of the package so that it can never participate

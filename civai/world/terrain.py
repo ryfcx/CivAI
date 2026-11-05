@@ -35,7 +35,7 @@ class WorldGenerationError(RuntimeError):
 class TerrainProperties:
     """Static, physical facts about a terrain type.
 
-    Food values live in :class:`~worldbox.config.ResourceConfig` instead, since
+    Food values live in :class:`~civai.config.ResourceConfig` instead, since
     those are balance knobs rather than physical properties.
     """
 

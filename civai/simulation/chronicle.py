@@ -1,6 +1,6 @@
 """The Chronicle: a permanent record of a civilisation's turning points.
 
-The :class:`~worldbox.simulation.events.EventLog` is a ring buffer of everything
+The :class:`~civai.simulation.events.EventLog` is a ring buffer of everything
 that happens, so after a few thousand days the early history has scrolled away.
 That is fine for a live feed and useless for watching a civilisation develop.
 

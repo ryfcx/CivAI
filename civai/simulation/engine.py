@@ -156,7 +156,7 @@ class DayReport:
 
 
 class SimulationEngine:
-    """Runs the Worldbox simulation, one day at a time."""
+    """Runs the CivAI simulation, one day at a time."""
 
     def __init__(self, config: Optional[Config] = None, seed: Optional[int] = None) -> None:
         self.config = config or Config()
@@ -1235,7 +1235,7 @@ class SimulationRunner:
         if self.running:
             return False
         self._stop.clear()
-        self._thread = threading.Thread(target=self._loop, name="worldbox-sim", daemon=True)
+        self._thread = threading.Thread(target=self._loop, name="civai-sim", daemon=True)
         self._thread.start()
         return True
 

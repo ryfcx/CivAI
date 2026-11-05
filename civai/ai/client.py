@@ -1,6 +1,6 @@
 """Shared DeepSeek client. Standard library only.
 
-Worldbox talks to DeepSeek-V4.1-Flash over HTTPS. Narration and tribe minds
+CivAI talks to DeepSeek-V4.1-Flash over HTTPS. Narration and tribe minds
 both go through here so there is one place for auth, retries and TLS.
 
 Keys come from ``.env`` or the environment: ``DEEPSEEK_API_KEY`` and

@@ -6,7 +6,7 @@ Conventions:
     health  100.0 = healthy              0.0 = dead
 
 Only the *passive* daily upkeep lives here. Costs and gains caused by actions
-(moving, resting, eating) are applied by :mod:`worldbox.agents.behavior` and the
+(moving, resting, eating) are applied by :mod:`civai.agents.behavior` and the
 engine, so this module stays a pure description of the body.
 """
 

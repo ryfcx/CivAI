@@ -443,7 +443,7 @@ class MindDirector:
         if self._pool is None:
             workers = max(1, self.config.max_concurrent)
             self._pool = ThreadPoolExecutor(
-                max_workers=workers, thread_name_prefix="worldbox-mind"
+                max_workers=workers, thread_name_prefix="civai-mind"
             )
         return self._pool
 

@@ -1,4 +1,4 @@
-# worldbox
+# CivAI
 
 A civilisation simulator that runs in the terminal.
 
@@ -13,9 +13,9 @@ This was an experiment in vibe coding. The simulator was built by describing wha
 ## Running it
 
 ```bash
-python3 -m worldbox.main                 # interactive
-python3 -m worldbox.main --seed 42       # pick a seed
-python3 -m worldbox.main --days 5000     # run headless, print a summary, exit
+python3 -m civai.main                 # interactive
+python3 -m civai.main --seed 42       # pick a seed
+python3 -m civai.main --days 5000     # run headless, print a summary, exit
 ```
 
 Type `start` for a live dashboard that repaints while the simulation runs. Space
@@ -79,7 +79,7 @@ Year    6 (day   2387) | Black Plague killed 18 over 14 days
 
 ## Editing how agents think
 
-`worldbox/rules.py` is the one file to edit. Agents score each thing they could
+`civai/rules.py` is the one file to edit. Agents score each thing they could
 do from 0 to 1 and take the highest. Three ways in:
 
 - Tune `WEIGHTS` at the top — raise `fight` and the world gets more violent.
@@ -93,7 +93,7 @@ Then check what changed: `python3 tools/compare_runs.py --days 6000`
 Live, while it runs:
 
 ```bash
-python3 -m worldbox.main --live
+python3 -m civai.main --live
 ```
 
 Opens a browser map that updates twice a second. Zoom with the `+`/`-` buttons
@@ -107,7 +107,7 @@ inside the prompt.
 Recorded, to scrub through afterwards:
 
 ```bash
-python3 -m worldbox.main --view 20000
+python3 -m civai.main --view 20000
 ```
 
 Simulates, builds a self-contained HTML page and opens it: a pixel map you can
@@ -144,7 +144,7 @@ and prints the difference.
 
 ## AI minds
 
-The point of Worldbox is to trap language models in a simulator and see what
+The point of CivAI is to trap language models in a simulator and see what
 they do with a people. Narration is optional colour; the minds are the players.
 
 Each tribe that forms is handed to DeepSeek-V4.1-Flash (`deepseek-flash`). Every
@@ -173,7 +173,7 @@ Put a key in `.env` at the project root (copy `.env.example`) and run it:
 # .env
 DEEPSEEK_API_KEY=your-key-here
 
-python3 -m worldbox.main --live
+python3 -m civai.main --live
 ```
 
 `export DEEPSEEK_API_KEY=...` still works, and overrides the file if both are set.
@@ -191,7 +191,7 @@ Nothing else in the simulation touches the network. The key is read from
 ## Layout
 
 ```
-worldbox/
+civai/
   config.py          every tunable number, imports nothing else
   world/             terrain generation, the grid, the food layer
   agents/            state, metabolism, decisions, names
@@ -234,7 +234,7 @@ Live mode is the exception — how many days pass depends on wall-clock time, so
 
 ## Tuning
 
-`worldbox/config.py`. Map size, food, metabolism, lifespans, how easily tribes form,
+`civai/config.py`. Map size, food, metabolism, lifespans, how easily tribes form,
 how fast research goes, how quickly relations sour, how deadly each disease is.
 
 Every system has an `enabled` flag. Turning one off is the fastest way to see what

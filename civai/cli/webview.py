@@ -925,6 +925,6 @@ def load_page() -> str:
         return PAGE_FILE.read_text(encoding="utf-8")
     except OSError:
         return (
-            "<!doctype html><meta charset='utf-8'><title>Worldbox</title>"
+            "<!doctype html><meta charset='utf-8'><title>CivAI</title>"
             f"<p style='font-family:system-ui;padding:2rem'>Missing UI file: {PAGE_FILE}</p>"
         )

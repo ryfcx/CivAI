@@ -5,7 +5,7 @@ background thread, so every statistic updates in place. Input is read a single
 keypress at a time (no Enter needed), which avoids the usual problem of a typed
 line being mangled by a concurrent repaint.
 
-Like the rest of :mod:`worldbox.cli`, this module only reads from the engine --
+Like the rest of :mod:`civai.cli`, this module only reads from the engine --
 it never mutates the world directly.
 
 Terminal handling:
@@ -140,7 +140,7 @@ def render_frame(
     rule = "─" * width
     status = "▶ RUNNING" if running else "❚❚ PAUSED"
     right = f"{status}   {rate:6.1f} days/s   speed {speed}"
-    headline = "WORLDBOX" + " " * max(1, width - 8 - len(right)) + right
+    headline = "CIVAI" + " " * max(1, width - 8 - len(right)) + right
 
     food_pct = (stats.total_food / stats.food_capacity * 100.0) if stats.food_capacity else 0.0
     terrain = stats.terrain_counts

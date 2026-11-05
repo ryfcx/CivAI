@@ -72,7 +72,7 @@ def build_situation(
     day: int,
     social: Optional["SocialContext"] = None,
 ) -> "Situation":
-    """Work out everything the scorers in :mod:`worldbox.rules` need.
+    """Work out everything the scorers in :mod:`civai.rules` need.
 
     All the arithmetic lives here so that the scorers themselves stay short
     enough to read and edit without knowing how the simulation is wired.
@@ -131,7 +131,7 @@ def score_actions(
 ) -> Dict["Goal", float]:
     """Score every action this agent could take today, on 0..1.
 
-    The scoring itself lives in :mod:`worldbox.rules`, which is the file meant
+    The scoring itself lives in :mod:`civai.rules`, which is the file meant
     to be edited. Each registered scorer is multiplied by its weight, and any
     scoring zero is dropped as "not an option right now".
     """

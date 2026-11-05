@@ -1,4 +1,4 @@
-"""The terminal interface for Worldbox.
+"""The terminal interface for CivAI.
 
 This is the only module that knows about printing, prompts and commands. It
 talks to the simulation exclusively through :class:`SimulationEngine`'s public
@@ -39,7 +39,7 @@ def render_dashboard(stats: WorldStats, events: List[Event]) -> str:
     """
     rule = _rule()
     lines = [
-        "WORLDBOX",
+        "CIVAI",
         rule,
         "",
         f"Day: {stats.day}",
@@ -479,7 +479,7 @@ Commands
   export [days]      Record a run to JSON for the visual map viewer
   events [n]         Display the n most recent events (default 15)
   help               Show this help
-  exit               Quit Worldbox
+  exit               Quit CivAI
 
 In the live dashboard
   space              Run / pause
@@ -490,7 +490,7 @@ In the live dashboard
 
 
 class Terminal:
-    """The interactive Worldbox command loop."""
+    """The interactive CivAI command loop."""
 
     def __init__(self, engine: SimulationEngine) -> None:
         self.engine = engine
@@ -539,7 +539,7 @@ class Terminal:
         print("\nType 'help' for commands.\n")
         while not self.should_exit:
             try:
-                raw = input("worldbox> ").strip()
+                raw = input("civai> ").strip()
             except (EOFError, KeyboardInterrupt):
                 print()
                 break
@@ -777,7 +777,7 @@ class Terminal:
                 recorder.run(days)
             else:
                 recorder.capture()
-            path = recorder.write_json(Path("worldbox_run.json"))
+            path = recorder.write_json(Path("civai_run.json"))
         print(f"Wrote {path} ({path.stat().st_size / 1024:.0f} KB, "
               f"{len(recorder.frames)} frames).")
 
@@ -793,5 +793,5 @@ class Terminal:
         print(HELP_TEXT)
 
     def cmd_exit(self, args: List[str]) -> None:
-        """Leave Worldbox."""
+        """Leave CivAI."""
         self.should_exit = True

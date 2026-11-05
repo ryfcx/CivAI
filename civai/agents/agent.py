@@ -1,7 +1,7 @@
 """The agent: identity, state, and a small personal memory.
 
 :class:`Agent` is deliberately close to plain data. Decision-making lives in
-:mod:`worldbox.agents.behavior` and world mutation lives in the engine, so an
+:mod:`civai.agents.behavior` and world mutation lives in the engine, so an
 agent can be inspected, serialised or copied without dragging along behaviour.
 """
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Turn an exported run into a self-contained HTML map viewer.
 
-    python3 -m worldbox.main --days 0        # then, at the prompt: export 20000
-    python3 tools/build_viewer.py worldbox_run.json worldbox.html
+    python3 -m civai.main --days 0        # then, at the prompt: export 20000
+    python3 tools/build_viewer.py civai_run.json civai.html
 
 The output is one file with the run data inlined, so it opens straight from disk
 with no server and no network access.
@@ -24,7 +24,7 @@ def build(run_json: Path, output: Path, template: Path = TEMPLATE) -> Path:
         raise FileNotFoundError(f"Missing viewer template: {template}")
     if not run_json.exists():
         raise FileNotFoundError(
-            f"Missing run data: {run_json}. Run 'export <days>' in worldbox first."
+            f"Missing run data: {run_json}. Run 'export <days>' in civai first."
         )
 
     html = template.read_text(encoding="utf-8")
@@ -39,11 +39,11 @@ def build(run_json: Path, output: Path, template: Path = TEMPLATE) -> Path:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Build the Worldbox map viewer.")
-    parser.add_argument("run", type=Path, nargs="?", default=Path("worldbox_run.json"),
-                        help="Exported run JSON (default: worldbox_run.json)")
-    parser.add_argument("output", type=Path, nargs="?", default=Path("worldbox.html"),
-                        help="Where to write the viewer (default: worldbox.html)")
+    parser = argparse.ArgumentParser(description="Build the CivAI map viewer.")
+    parser.add_argument("run", type=Path, nargs="?", default=Path("civai_run.json"),
+                        help="Exported run JSON (default: civai_run.json)")
+    parser.add_argument("output", type=Path, nargs="?", default=Path("civai.html"),
+                        help="Where to write the viewer (default: civai.html)")
     args = parser.parse_args(argv)
 
     try:
